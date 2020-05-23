@@ -7,7 +7,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Illuminate\Support\Str;
 
-class TenantMakeCommand extends ModelMakeCommand
+class TenantModelMakeCommand extends ModelMakeCommand
 {
     /**
      * The console command name.
