@@ -2,28 +2,31 @@
 
 namespace App\Providers;
 
+use App\Tenant\TenantManager;
 use Illuminate\Support\ServiceProvider;
-use Tenant;
 
-class AppServiceProvider extends ServiceProvider
+class TenantServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-        //
+        $this->app->bind('tenant', function(){
+            return new TenantManager();
+        });
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
-        Tenant::loadConnections();
+        //
     }
+
 }
