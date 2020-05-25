@@ -20,6 +20,6 @@ class MigrateMakeCommand extends MigrateCommand
                 : $targetPath;
         }
 
-        return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations/system';
+        return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.'system';
     }
 }

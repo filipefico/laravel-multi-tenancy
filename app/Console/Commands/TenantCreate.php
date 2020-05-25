@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Model\Company;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class TenantCreate extends Command
 {
@@ -39,21 +40,25 @@ class TenantCreate extends Command
      */
     public function handle()
     {
-        $ids = explode(",", $this->option('ids'));
-        $companies = Company::whereIn('id', $ids)->get();
+        if (Schema::hasTable((new Company())->getTable())) {
+            $ids = explode(",", $this->option('ids'));
+            $companies = Company::whereIn('id', $ids)->get();
 
-        foreach ($companies as $company){
-            DB::statement("CREATE DATABASE {$company->database};");
+            foreach ($companies as $company) {
+                DB::statement("CREATE DATABASE {$company->database};");
 
-            $this->call('migrate',[
-                '--database' => $company->prefix,
-                '--path' => 'database/migrations/tenant',
-                '--seed'
-            ]);
-        }
+                $this->call('migrate', [
+                    '--database' => $company->prefix,
+                    '--path' => 'database/migrations/tenant',
+                    '--seed'
+                ]);
+            }
 
-        if($companies->count() == 0){
-            $this->error('Ids of tenant not found in table.');
+            if ($companies->count() == 0) {
+                $this->error('Ids of tenant not found in table.');
+            }
+        }else{
+            $this->error('The tenant table has not been created.');
         }
     }
 }

@@ -40,6 +40,6 @@ class TenantMigrateMakeCommand extends MigrateCommand
                 : $targetPath;
         }
 
-        return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations/tenant';
+        return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.'tenant';
     }
 }
